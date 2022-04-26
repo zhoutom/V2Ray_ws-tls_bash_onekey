@@ -1,8 +1,8 @@
-## V2Ray 基于 Nginx 的 vmess+ws+tls 一键安装脚本
-
+## V2Ray 基于 Nginx 的VLESS+websocket+TLS+Nginx+Website一键安装脚本
+> 本脚本fork自wulabing。
 > 感谢 JetBrains 提供的非商业开源软件开发授权
-
 > Thanks for non-commercial open source development authorization by JetBrains
+
 ### 关于 VMess MD5 认证信息 淘汰机制
 > 自 2022 年 1 月 1 日起，服务器端将默认禁用对于 MD5 认证信息 的兼容。任何使用 MD5 认证信息的客户端将无法连接到禁用 VMess MD5 认证信息的服务器端。
 
@@ -19,12 +19,12 @@
 * 安装好 wget
 
 ### 安装/更新方式（h2 和 ws 版本已合并）
-Vmess+websocket+TLS+Nginx+Website
+Vmess+websocket+TLS+Nginx+Website(Vmess不建议使用)
 ```
 wget -N --no-check-certificate -q -O install.sh "https://raw.githubusercontent.com/wulabing/V2Ray_ws-tls_bash_onekey/master/install.sh" && chmod +x install.sh && bash install.sh
 ```
 
-VLESS+websocket+TLS+Nginx+Website
+VLESS+websocket+TLS+Nginx+Website(推荐）
 ```
 wget -N --no-check-certificate -q -O install.sh "https://raw.githubusercontent.com/wulabing/V2Ray_ws-tls_bash_onekey/dev/install.sh" && chmod +x install.sh && bash install.sh
 ```
@@ -40,7 +40,6 @@ wget -N --no-check-certificate -q -O install.sh "https://raw.githubusercontent.c
 > 更新内容请查看 CHANGELOG.md
 
 ### 鸣谢
-* ~~本脚本的另一个分支版本（Use Host）地址： https://github.com/dylanbai8/V2Ray_ws-tls_Website_onekey 请根据需求进行选择~~ 该作者可能已停止维护
 * 本脚本中 MTProxy-go TLS 版本项目引用 https://github.com/whunt1/onekeymakemtg 在此感谢 whunt1
 * 本脚本中 锐速4合1脚本原项目引用 https://www.94ish.me/1635.html 在此感谢
 * 本脚本中 锐速4合1脚本修改版项目引用 https://github.com/ylx2016/Linux-NetSpeed 在此感谢 ylx2016
@@ -51,7 +50,7 @@ wget -N --no-check-certificate -q -O install.sh "https://raw.githubusercontent.c
 脚本支持自动生成 let's encrypted 证书，有效期3个月，理论上自动生成的证书支持自动续签
 
 ### 查看客户端配置
-`cat ~/v2ray_info.txt`
+`cat ~/v2ray_info.info`
 
 ### V2ray 简介
 
@@ -61,15 +60,30 @@ wget -N --no-check-certificate -q -O install.sh "https://raw.githubusercontent.c
 
 ### 建议单服务器仅搭建单个代理
 * 本脚本默认安装最新版本的V2ray core
-* V2ray core 目前最新版本为 4.22.1（同时请注意客户端 core 的同步更新，需要保证客户端内核版本 >= 服务端内核版本）
+* V2ray core 目前最新版本为 4.40.0（同时请注意客户端 core 的同步更新，需要保证客户端内核版本 >= 服务端内核版本）
 * 建议使用默认的443端口作为连接端口
 * 伪装内容可自行替换。
 
 ### 注意事项
-* 推荐在纯净环境下使用本脚本，如果你是新手，请不要使用Centos系统。
+* 推荐在纯净环境下使用本脚本，如果你是新手，请不要使用Centos系统,本脚本在racknerd Debian11上安装测试成功。
 * 在尝试本脚本确实可用之前，请不要将本程序应用于生产环境中。
 * 该程序依赖 Nginx 实现相关功能，请使用 [LNMP](https://lnmp.org) 或其他类似携带 Nginx 脚本安装过 Nginx 的用户特别留意，使用本脚本可能会导致无法预知的错误（未测试，若存在，后续版本可能会处理本问题）。
-* V2Ray 的部分功能依赖于系统时间，请确保您使用V2RAY程序的系统 UTC 时间误差在三分钟之内，时区无关。
+* V2Ray 的部分功能依赖于系统时间，请确保您使用V2RAY程序的系统 UTC 时间误差在三分钟之内，时区无关。解决方法：
+###时区设置
+```timedatectl set-timezone Asia/Shanghai```
+###安装ntp同步
+```yum install -y ntp```
+###设置ntp开机启动
+```systemctl enable ntp```
+###启动ntp服务
+```systemctl start ntp```
+###查看ntp服务运行状态
+```systemctl status ntp```
+###同步时间
+```ntpq -p```
+###查看系统当前时间
+```date```
+* 
 * 本 bash 依赖于 [V2ray 官方安装脚本](https://install.direct/go.sh) 及 [acme.sh](https://github.com/Neilpang/acme.sh) 工作。
 * Centos 系统用户请预先在防火墙中放行程序相关端口（默认：80，443）
 
@@ -98,7 +112,7 @@ Nginx 目录： `/etc/nginx`
 
 ### 捐赠
 
-您可以使用我的 搬瓦工 AFF 购买 VPS
+您可以使用原作得wulabing的 搬瓦工 AFF 购买 VPS
 
 https://bandwagonhost.com/aff.php?aff=63939
 
